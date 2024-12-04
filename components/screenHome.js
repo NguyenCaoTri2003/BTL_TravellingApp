@@ -280,21 +280,22 @@ import { useSearchContext } from './context/SearchContext';
             </TouchableOpacity >
             <TouchableOpacity 
               style={[styles.itemMenuMain, selectedMainMenu === 'Bookings']} 
-              onPress={() => setSelectedMainMenu('Bookings')}
+              onPress={() => {navigation.navigate('ScreenBooked')}}
             >
               <IconsF name= 'suitcase' color={selectedMainMenu === 'Bookings' ? '#04BAD6' : '#414B52'} size={25}/>
               <Text style={[styles.textMenuMain, selectedMainMenu === 'Bookings' && styles.textSelect]}>Bookings</Text>
             </TouchableOpacity>
             <TouchableOpacity 
               style={[styles.itemMenuMain, selectedMainMenu === 'Inbox']} 
-              onPress={() => setSelectedMainMenu('Inbox')}
+              onPress={() => navigation.navigate('ScreenBooked')}
             >
               <IconsF name='wechat' color={selectedMainMenu === 'Inbox' ? '#04BAD6' : '#414B52'} size={25}/>
               <Text style={[styles.textMenuMain, selectedMainMenu === 'Inbox' && styles.textSelect]}>Inbox</Text>
             </TouchableOpacity>
             <TouchableOpacity 
               style={[styles.itemMenuMain, selectedMainMenu === 'Profile']} 
-              onPress={() => setSelectedMainMenu('Profile')}
+              //onPress={() => setSelectedMainMenu('Profile')}
+              onPress={() => {navigation.navigate('ScreenProfile')}}
             >
               <IconsF name='user-circle-o' color={selectedMainMenu === 'Profile' ? '#04BAD6' : '#414B52'} size={25}/>
               <Text style={[styles.textMenuMain, selectedMainMenu === 'Profile' && styles.textSelect]}>Profile</Text>

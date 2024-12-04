@@ -268,7 +268,8 @@ export default function ScreenInfo() {
             img: item.img,
             date,
             guests,
-            title: item.title
+            title: item.title,
+            id: item.id
           })}
         >
           <Text style={{ color: 'white', fontWeight: 'bold' }}>Book now</Text>

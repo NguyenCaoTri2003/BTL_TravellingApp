@@ -2,17 +2,29 @@ import { Text, SafeAreaView, StyleSheet, ScrollView, View, TouchableOpacity, Ima
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import React, { useState, useRef } from 'react';
 import { useRoute } from '@react-navigation/native';
+import { useApi } from './context/ApiContext';
+import { useAuth } from './context/AuthContext';
 
 export default function ScreenConfirm({ navigation }) {
 
   const [selectedOption, setSelectedOption] = useState(null); // Trạng thái cho checkbox
   const [showError, setShowError] = useState(false); // Trạng thái hiển thị lỗi
   const route = useRoute();
-  const { price, img, date, guests, title } = route.params;
+  const { price, img, date, guests, title, id } = route.params;
   const fee1 = 5;
   const fee2 = 5;
   const [currentDate, setCurrentDate] = useState(date);  
   const [currentGuests, setCurrentGuests] = useState(guests);
+  const { currentUser, setCurrentUser } = useAuth();
+  const { users, updateUser } = useApi(); 
+
+  const randomRefNumber = Math.floor(1000000000 + Math.random() * 9000000000).toString();
+
+  const currentDateBooking = new Date();
+  const day = String(currentDateBooking.getDate()).padStart(2, '0');
+  const month = String(currentDateBooking.getMonth() + 1).padStart(2, '0');
+  const year = currentDateBooking.getFullYear();
+  const formattedDate = `${day}-${month}-${year}`;
 
   // State để điều khiển modal
   const [modalVisible, setModalVisible] = useState(false);
@@ -24,6 +36,7 @@ export default function ScreenConfirm({ navigation }) {
 
   const incrementGuests = () => setCurrentGuests(currentGuests + 1);
   const decrementGuests = () => setCurrentGuests(currentGuests > 1 ? currentGuests - 1 : 1); 
+
 
 
   // Mở modal khi bấm vào icon
@@ -62,7 +75,23 @@ export default function ScreenConfirm({ navigation }) {
 
   const { totalText, totalAmount } = calculateTotalPrice(price, currentDate);
 
-  const handleBookNow = () => {
+  // const handleBookNow = () => {
+  //   if (!selectedOption) {
+  //     setShowError(true); // Hiển thị lỗi nếu chưa chọn phương thức thanh toán
+  //     // Cuộn lên vùng lỗi
+  //     if (scrollViewRef.current) {
+  //       scrollViewRef.current.scrollTo({ y: 280, animated: true }); // Cuộn lên vị trí chứa lỗi
+  //     }
+  //   } else {
+  //     setShowError(false);
+  //     // Điều hướng tới màn hình "ScreenBookingConfirmed"
+  //     navigation.navigate('ScreenBookingConfirmed',{
+  //       totalAmountAll
+  //     });
+  //   }
+  // };
+
+  const handleBookNow = async () => {
     if (!selectedOption) {
       setShowError(true); // Hiển thị lỗi nếu chưa chọn phương thức thanh toán
       // Cuộn lên vùng lỗi
@@ -71,10 +100,55 @@ export default function ScreenConfirm({ navigation }) {
       }
     } else {
       setShowError(false);
-      // Điều hướng tới màn hình "ScreenBookingConfirmed"
-      navigation.navigate('ScreenBookingConfirmed',{
-        totalAmountAll
-      });
+
+      // Lấy thông tin người dùng từ context
+      const user = currentUser; // currentUser được lấy từ ApiContext
+
+      if (user) {
+        try {
+          // Thêm id khách sạn vào listBookedHotel
+          const bookingDetails = {
+            id, // ID khách sạn
+            numberDay: date, // Số ngày (được lấy từ `route.params`)
+            guests, // Số khách (được lấy từ `route.params`)
+            idBill: randomRefNumber,
+            totalAmountAll,
+            dayBooking: formattedDate,
+            selectedOption
+          };
+
+          const updatedUser = {
+            ...user,
+            listBookedHotel: [...user.listBookedHotel, bookingDetails],
+          };
+
+          // Gửi API PUT để cập nhật người dùng
+          const response = await fetch(
+            `https://6722030b2108960b9cc28724.mockapi.io/loginApp/${user.id}`,
+            {
+              method: 'PUT',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(updatedUser),
+            }
+          );
+
+          if (response.ok) {
+            const data = await response.json();
+            setCurrentUser(data); // Cập nhật lại thông tin người dùng trong context
+            // Điều hướng tới màn hình "ScreenBookingConfirmed"
+            navigation.navigate('ScreenBookingConfirmed', {
+              totalAmountAll,
+              randomRefNumber,
+              formattedDate,
+              selectedOption
+            });
+          } else {
+            console.error('Failed to update user');
+          }
+        } catch (err) {
+          console.error('Error updating user:', err);
+        }
+      }
     }
   };
 

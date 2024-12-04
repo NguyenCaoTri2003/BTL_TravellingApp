@@ -10,6 +10,8 @@ import ScreenDescription from './components/screen_Description';
 import ScreenFacilitiesServices from './components/screen_Facilities&Services';
 import ScreenConfirm from './components/screen_Confirm';
 import ScreenBookingConfirmed from './components/screen_Booking_confirmed';
+import ScreenBooked from './components/screenBooked';
+import ScreenChat from './components/screenChat';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -19,8 +21,6 @@ import { AuthProvider } from './components/context/AuthContext';
 import { DataProvider } from './components/context/DataContext'; // Import DataProvider
 import { SearchProvider } from './components/context/SearchContext';
 import { ReviewsProvider } from './components/context/ReviewContext';
-
-import TextReviews from './components/text_review';
 
 const Stack = createStackNavigator();
  
@@ -105,8 +105,14 @@ export default function App() {
                     />
 
                     <Stack.Screen 
-                      name="TextReviews" 
-                      component={TextReviews} 
+                      name="ScreenBooked" 
+                      component={ScreenBooked} 
+                      options={{ headerShown: false }} 
+                    />
+
+                    <Stack.Screen 
+                      name="ScreenChat" 
+                      component={ScreenChat} 
                       options={{ headerShown: false }} 
                     />
                   

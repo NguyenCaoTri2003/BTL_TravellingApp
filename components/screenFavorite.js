@@ -126,15 +126,15 @@ export default function ScreenFavorite() {
             <IconsF name="heart" color="#04BAD6" size={25} />
             <Text style={styles.textSelect}>Favorite</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.itemMenuMain}>
+          <TouchableOpacity style={styles.itemMenuMain} onPress={() => navigation.navigate('ScreenBooked')}>
             <IconsF name="suitcase" color="#414B52" size={25} />
             <Text style={styles.textNormal}>Bookings</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.itemMenuMain}>
+          <TouchableOpacity style={styles.itemMenuMain} onPress={() => navigation.navigate('ScreenChat')}>
             <IconsF name="wechat" color="#414B52" size={25} />
             <Text style={styles.textNormal}>Inbox</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.itemMenuMain}>
+          <TouchableOpacity style={styles.itemMenuMain} onPress={() => {navigation.navigate('ScreenProfile')}}>
             <IconsF name="user-circle-o" color="#414B52" size={25} />
             <Text style={styles.textNormal}>Profile</Text>
           </TouchableOpacity>
@@ -154,7 +154,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: 20,
-    alignItems: 'center'
+    alignItems: 'center',
+    marginTop: 20
   },
   name: {
     fontSize: 17,

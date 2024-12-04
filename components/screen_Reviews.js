@@ -8,61 +8,6 @@ import { ReviewsContext } from './context/ReviewContext';
 import { useDataHotel } from './context/DataContext'
 
 
-// const Data_Reviews = [
-//   {
-//     id: 1,
-//     full_name: 'Jinny Oslin',
-//     avatar: require('../image/avatar_1.jpg'),
-//     assessment_date: 'One day ago',
-//     rate: 5,
-//     comment: 'The best apartment I have ever booked. Spacious, clean, Scandinavian design. Excellent location. Astonishing views to the port. Comfortable beds. Feeling like home. It is better than the pictures showing',
-//   }, 
-//   {
-//     id: 2,
-//     full_name: 'Marina John',
-//     avatar: require('../image/avatar_2.jpg'),
-//     assessment_date: 'One day ago',
-//     rate: 4,
-//     comment: 'The best apartment I have ever booked. Spacious, clean, Scandinavian design. Excellent location. Astonishing views to the port. Comfortable beds. Feeling like home. It is better than the pictures showing',
-//   }, 
-// ];
-
-// const Reviews = ({ item, onPress }) => {
-//   return (
-//     <TouchableOpacity style={styles.review_details_box} onPress={() => onPress(item)}>
-//       <View style={styles.box_name_star}>
-//         <View style={styles.tt_person}>
-//           <Image style={styles.img_avatar} source={item.avatar ? { uri: item.avatar } : require('../image/avt-default.png')} />
-//           <View style={styles.name_date}>
-//             <Text style={styles.txt_full_name}>{item.reviewer}</Text>
-//             //<Text style={styles.txt_date}>{item.assessment_date}</Text>
-//           </View>
-//         </View>
-//         <View style={styles.box_star_icon}>
-//           {Array.from({ length: Math.min(item.rate, 5) }, (_, index) => (
-//             <FontAwesome key={index} name="star" color="yellow" size={15} style={styles.icon_star} />
-//           ))}
-        
-//         </View>
-//       </View>
-//       <Text style={styles.txt_comment} numberOfLines={2}>{item.comment}</Text>
-//     </TouchableOpacity>
-//   );
-// };
-
-
-// <View style={styles.view_phanTram}>
-//             {reversedRatingPercentages.map((percentage, index) => (
-//               <View style={styles.box_phanTram} key={index}>
-//                 <View style={styles.thanh_phanTram}>
-//                   <View style={[styles.thanh_phanTram_mau, { width: `${percentage}%` }]} />
-//                 </View>
-//                 {/* Hiển thị giá trị xếp hạng (5, 4, 3, 2, 1) */}
-//                 <Text>{5 - index}</Text>
-//               </View>
-//             ))}
-//           </View>
-
 
   const Reviews = ({ item, onPress }) => {
     return (
@@ -98,18 +43,13 @@ import { useDataHotel } from './context/DataContext'
 
 
 export default function ScreenReviews({route}) {
-  //const { reviews } = route.params; // lấy dữ liệu review từ screenInfo
+ 
   const { reviews } = route.params || { reviews: [] };
   console.log('route', reviews)
   //const { reviews } = useContext(ReviewsContext);
   const navigation = useNavigation(); 
   const { selectedHotel, setSelectedHotel } = useDataHotel(); // Access context here
-  //const item = selectedHotel || {}; 
-
-  console.log("Selected hotel in ScreenReview:", selectedHotel);
-
   
-
   // tổng số review
   const calculateTotalReviews = (reviews) => {
    return reviews.length; // Count the number of reviews
@@ -165,10 +105,6 @@ export default function ScreenReviews({route}) {
   // Nhận tỷ lệ phần trăm cho mỗi xếp hạng (1-5 sao)
   const ratingPercentages = calculateRatingDistribution(reviews);
 
-  // Đảo ngược thứ tự hiển thị 5 sao ở trên và 1 sao ở dưới
-  //const reversedRatingPercentages = [...ratingPercentages].reverse();
-  
-  
   // model
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedReview, setSelectedReview] = useState(null);

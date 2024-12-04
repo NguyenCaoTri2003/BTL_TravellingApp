@@ -6,14 +6,8 @@ export default function ScreenBookingConfirmed({navigation}) {
 
   // Lấy ngày tháng năm hiện tại
   const currentDate = new Date();
-  const day = String(currentDate.getDate()).padStart(2, '0');
-  const month = String(currentDate.getMonth() + 1).padStart(2, '0');
-  const year = currentDate.getFullYear();
-  const formattedDate = `${day}-${month}-${year}`;
   const route = useRoute();
-  const { totalAmountAll } = route.params;
-  // Sinh mã ngẫu nhiên
-  const randomRefNumber = Math.floor(1000000000 + Math.random() * 9000000000).toString();
+  const { totalAmountAll, randomRefNumber, formattedDate, selectedOption } = route.params;
 
   return (
     <View style={styles.container}>
@@ -37,7 +31,7 @@ export default function ScreenBookingConfirmed({navigation}) {
               </View>
               <View style={styles.info1}>
                 <Text style={styles.textDetail1}>Payment method</Text>
-                <Text style={styles.textDetail2}>Credit Card</Text>
+                <Text style={styles.textDetail2}>{selectedOption}</Text>
               </View>
             </View>
           </View>
@@ -54,7 +48,7 @@ export default function ScreenBookingConfirmed({navigation}) {
       </View>
 
       <View style={styles.footer}>
-        <TouchableOpacity style={styles.btnView}>
+        <TouchableOpacity style={styles.btnView} onPress={() => navigation.navigate('ScreenBooked')}>
           <Text style={styles.textBtnView}>View booking</Text>
         </TouchableOpacity>
       </View>
@@ -116,19 +110,19 @@ const styles = StyleSheet.create({
    
   },
   textDetail1:{
-    fontSize: 19,
+    fontSize: 18,
     color: '#3B3B3B',
   },
   textDetail2:{
-    fontSize: 19,
+    fontSize: 18,
     fontWeight: 'bold'
   },
   imgSuccess:{
     position: 'absolute',
-    width: 156,
-    height: 180,
+    width: 146,
+    height: 170,
     top: 80,
-    left: '50%', 
+    left: '60%', 
     transform: [{ translateX: -90 }],
     zIndex: 10, 
   },

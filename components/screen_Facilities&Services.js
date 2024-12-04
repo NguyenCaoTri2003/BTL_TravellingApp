@@ -4,34 +4,6 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 // or any files within the Snack
 import { useRoute } from '@react-navigation/native';
 
-// const data = [
-//   {
-//     id: 1,
-//     facility_1: {
-//       guest: 2,
-//       bedroom: 1,
-//       bed: 1,
-//       bath: 1,
-//     },
-//     facility_2: { // 1: True, 0: False
-//       wifi: 1,
-//       kitchen: 1,
-//       exercise_equipment: 1,
-//       pool: 1,
-//       garden: 1,
-//     },
-//     cleaning: {
-//       washer: 1,
-//       free_dryer: 1,
-//       iron: 1,
-//     },
-//     bathroom:{
-//       bathtub: 1,
-//       hair_dryer: 1,
-//     },
-//   },
-// ];
-
 // Icon mapping based on facility names
 const facilityIcons = {
   wifi: require('../image/icons8-wifi-48.png'),
