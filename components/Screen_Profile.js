@@ -109,8 +109,8 @@ export default function ScreenProfile({ navigation }) {
 
         {/* Các nút để lưu và hủy */}
         <View style={styles.v_btn}>
-          <TouchableOpacity style={styles.btn_cancel}>
-            <Text style={styles.txt_btn}>Cancel</Text>
+          <TouchableOpacity style={styles.btn_cancel} onPress={() => navigation.navigate('ScreenSignUp')}>
+            <Text style={styles.txt_btn}>Log Out</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.btn_save} onPress={handleSave}>
             <Text style={styles.txt_btn}>Save</Text>
